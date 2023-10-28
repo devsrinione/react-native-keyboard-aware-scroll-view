@@ -8,7 +8,9 @@ import {
   ScrollViewProps,
   FlatListProps,
   SectionListProps,
-  ViewProps
+  ViewProps,
+  LayoutRectangle,
+  NativeScrollPoint
 } from 'react-native'
 
 interface KeyboardAwareProps {
@@ -155,7 +157,8 @@ interface KeyboardAwareSectionListProps<ItemT>
     SectionListProps<ItemT> {}
 
 interface KeyboardAwareState {
-  keyboardSpace: number
+  keyboardSpace: number,
+  flashScrollIndicators: () => void
 }
 
 declare class ScrollableComponent<P, S> extends React.Component<P, S> {
@@ -167,6 +170,16 @@ declare class ScrollableComponent<P, S> extends React.Component<P, S> {
     reactNode: Object,
     extraHeight?: number,
     keyboardOpeningTime?: number
+  ) => void
+       scrollIntoView: (
+    element: React.ReactElement,
+    options?: {
+      getScrollPosition?: (
+        parentLayout: LayoutRectangle,
+        childLayout: LayoutRectangle,
+        contentOffset: NativeScrollPoint
+      ) => NativeScrollPoint & { animated?: boolean }
+    }
   ) => void
 }
 
@@ -180,12 +193,12 @@ export class KeyboardAwareScrollView extends ScrollableComponent<
   KeyboardAwareScrollViewProps,
   KeyboardAwareState
 > {}
-export class KeyboardAwareFlatList extends ScrollableComponent<
-  KeyboardAwareFlatListProps<any>,
+export class KeyboardAwareFlatList<T> extends ScrollableComponent<
+  KeyboardAwareFlatListProps<T>,
   KeyboardAwareState
 > {}
-export class KeyboardAwareSectionList extends ScrollableComponent<
-  KeyboardAwareSectionListProps<any>,
+export class KeyboardAwareSectionList<T> extends ScrollableComponent<
+  KeyboardAwareSectionListProps<T>,
   KeyboardAwareState
 > {}
 
