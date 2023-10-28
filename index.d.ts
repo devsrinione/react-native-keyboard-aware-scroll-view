@@ -157,7 +157,8 @@ interface KeyboardAwareSectionListProps<ItemT>
     SectionListProps<ItemT> {}
 
 interface KeyboardAwareState {
-  keyboardSpace: number
+  keyboardSpace: number,
+  flashScrollIndicators: () => void
 }
 
 declare class ScrollableComponent<P, S> extends React.Component<P, S> {
